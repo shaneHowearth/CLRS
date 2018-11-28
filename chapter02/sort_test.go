@@ -29,6 +29,10 @@ func TestInsertionSortDesc(t *testing.T) {
 			input:  []int{31, 41, 59, 26, 41, 58},
 			output: []int{26, 31, 41, 41, 58, 59},
 		},
+		"Empty": {
+			input:  []int{},
+			output: []int{},
+		},
 	}
 
 	for tn, tc := range testcases {
@@ -60,7 +64,11 @@ func TestInsertionSortAsc(t *testing.T) {
 		},
 		"Book example": {
 			input:  []int{31, 41, 59, 26, 41, 58},
-			output: []int{26, 31, 41, 41, 58, 59},
+			output: []int{59, 58, 41, 41, 31, 26},
+		},
+		"Empty": {
+			input:  []int{},
+			output: []int{},
 		},
 	}
 
