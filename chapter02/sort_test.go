@@ -25,6 +25,10 @@ func TestInsertionSort(t *testing.T) {
 			input:  []int{3, 1, 1, 2},
 			output: []int{1, 1, 2, 3},
 		},
+		"Book example": {
+			input:  []int{31, 41, 59, 26, 41, 58},
+			output: []int{26, 31, 41, 41, 58, 59},
+		},
 	}
 
 	for tn, tc := range testcases {
