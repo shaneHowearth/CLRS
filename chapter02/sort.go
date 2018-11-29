@@ -29,3 +29,28 @@ func InsertionSortAsc(input []int) ([]int, error) {
 	}
 	return input, nil
 }
+
+// SelectionSort -
+func SelectionSort(input []int) ([]int, error) {
+	for i := 0; i < len(input)-1; i++ {
+		// find lowest
+		n := int(^uint(0) >> 1)
+		ij := len(input) - 1
+		swap := false
+		for j := i; j < len(input); j++ {
+			if input[j] < n {
+				n = input[j]
+				ij = j
+				swap = true
+			}
+		}
+		// swap
+		if swap {
+			tmp := input[i]
+			input[i] = input[ij]
+			input[ij] = tmp
+		}
+	}
+	return input, nil
+
+}
