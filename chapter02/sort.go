@@ -54,3 +54,46 @@ func SelectionSort(input []int) ([]int, error) {
 	return input, nil
 
 }
+
+// Divide and Conquer
+
+// MergeSort -
+func MergeSort(A []int) ([]int, error) {
+	if len(A) < 1 {
+		return A, nil
+	}
+	left := A[:len(A)/2]
+	right := A[len(A)/2:]
+	if len(left) != 1 {
+		left, _ = MergeSort(left)
+	}
+	if len(right) != 1 {
+		right, _ = MergeSort(right)
+	}
+	return merge(left, right)
+}
+
+func merge(l, r []int) ([]int, error) {
+	var result []int
+	var i, j int
+	for {
+		// stop the loop when either l or r are empty
+		if i == len(l) || j == len(r) {
+			break
+		}
+		if l[i] < r[j] {
+			result = append(result, l[i])
+			i++
+		} else {
+			result = append(result, r[j])
+			j++
+		}
+	}
+	if i < len(l) {
+		result = append(result, l[i:]...)
+	}
+	if j < len(r) {
+		result = append(result, r[j:]...)
+	}
+	return result, nil
+}
