@@ -1,5 +1,19 @@
 package chapter02
 
+// BubbleSort -
+func BubbleSort(input []int) ([]int, error) {
+	for i := 0; i <= len(input); i++ {
+		for j := 0; j < len(input)-(1+i); j++ {
+			if input[j+1] < input[j] {
+				tmp := input[j+1]
+				input[j+1] = input[j]
+				input[j] = tmp
+			}
+		}
+	}
+	return input, nil
+}
+
 // InsertionSortDesc -
 func InsertionSortDesc(input []int) ([]int, error) {
 	for i := len(input) - 1; i >= 0; i-- {
