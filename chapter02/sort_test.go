@@ -7,7 +7,14 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestInsertionSortDesc(t *testing.T) {
+func TestSortDesc(t *testing.T) {
+	functions := map[string]func([]int) ([]int, error){
+		"InsertionSortDesc": chapter02.InsertionSortDesc,
+		"BubbleSort":        chapter02.BubbleSort,
+		"SelectionSort":     chapter02.SelectionSort,
+		"MergeSort":         chapter02.MergeSort,
+	}
+
 	testcases := map[string]struct {
 		input       []int
 		output      []int
@@ -35,27 +42,32 @@ func TestInsertionSortDesc(t *testing.T) {
 		},
 	}
 
-	for tn, tc := range testcases {
-		out, err := chapter02.InsertionSortDesc(tc.input)
-		assert.Equal(t, tc.output, out)
-		if tc.expectedErr != nil {
-			assert.Equalf(t, tc.expectedErr, err.Error(), "%s Error Check", tn)
+	for fn, f := range functions {
+		for tn, tc := range testcases {
+			out, err := f(tc.input)
+			assert.Equalf(t, tc.output, out, "%s %s Output check", fn, tn)
+			if tc.expectedErr != nil {
+				assert.Equalf(t, tc.expectedErr, err.Error(), "%s Error Check", tn)
+			}
 		}
 	}
 }
 
-func TestInsertionSortAsc(t *testing.T) {
+func TestSortAsc(t *testing.T) {
+	functions := map[string]func([]int) ([]int, error){
+		"InsertionSortAsc": chapter02.InsertionSortAsc,
+	}
 	testcases := map[string]struct {
 		input       []int
 		output      []int
 		expectedErr error
 	}{
-		"No Error": {
-			input:  []int{1, 2, 3},
-			output: []int{3, 2, 1},
-		},
 		"Already Sorted": {
 			input:  []int{3, 2, 1},
+			output: []int{3, 2, 1},
+		},
+		"No Error": {
+			input:  []int{1, 2, 3},
 			output: []int{3, 2, 1},
 		},
 		"Double Up": {
@@ -72,122 +84,13 @@ func TestInsertionSortAsc(t *testing.T) {
 		},
 	}
 
-	for tn, tc := range testcases {
-		out, err := chapter02.InsertionSortAsc(tc.input)
-		assert.Equal(t, tc.output, out)
-		if tc.expectedErr != nil {
-			assert.Equalf(t, tc.expectedErr, err.Error(), "%s Error Check", tn)
-		}
-	}
-}
-
-func TestSelectionSort(t *testing.T) {
-	testcases := map[string]struct {
-		input       []int
-		output      []int
-		expectedErr error
-	}{
-		"No Error": {
-			input:  []int{3, 2, 1},
-			output: []int{1, 2, 3},
-		},
-		"Already Sorted": {
-			input:  []int{1, 2, 3},
-			output: []int{1, 2, 3},
-		},
-		"Double Up": {
-			input:  []int{3, 1, 1, 2},
-			output: []int{1, 1, 2, 3},
-		},
-		"Book example": {
-			input:  []int{31, 41, 59, 26, 41, 58},
-			output: []int{26, 31, 41, 41, 58, 59},
-		},
-		"Empty": {
-			input:  []int{},
-			output: []int{},
-		},
-	}
-
-	for tn, tc := range testcases {
-		out, err := chapter02.SelectionSort(tc.input)
-		assert.Equal(t, tc.output, out)
-		if tc.expectedErr != nil {
-			assert.Equalf(t, tc.expectedErr, err.Error(), "%s Error Check", tn)
-		}
-	}
-}
-
-func TestMergeSort(t *testing.T) {
-	testcases := map[string]struct {
-		input       []int
-		output      []int
-		expectedErr error
-	}{
-		"No Error": {
-			input:  []int{3, 2, 1},
-			output: []int{1, 2, 3},
-		},
-		"Already Sorted": {
-			input:  []int{1, 2, 3},
-			output: []int{1, 2, 3},
-		},
-		"Double Up": {
-			input:  []int{3, 1, 1, 2},
-			output: []int{1, 1, 2, 3},
-		},
-		"Book example": {
-			input:  []int{31, 41, 59, 26, 41, 58},
-			output: []int{26, 31, 41, 41, 58, 59},
-		},
-		"Empty": {
-			input:  []int{},
-			output: []int{},
-		},
-	}
-
-	for tn, tc := range testcases {
-		out, err := chapter02.MergeSort(tc.input)
-		assert.Equal(t, tc.output, out)
-		if tc.expectedErr != nil {
-			assert.Equalf(t, tc.expectedErr, err.Error(), "%s Error Check", tn)
-		}
-	}
-}
-
-func TestBubbleSort(t *testing.T) {
-	testcases := map[string]struct {
-		input       []int
-		output      []int
-		expectedErr error
-	}{
-		"No Error": {
-			input:  []int{3, 2, 1},
-			output: []int{1, 2, 3},
-		},
-		"Already Sorted": {
-			input:  []int{1, 2, 3},
-			output: []int{1, 2, 3},
-		},
-		"Double Up": {
-			input:  []int{3, 1, 1, 2},
-			output: []int{1, 1, 2, 3},
-		},
-		"Book example": {
-			input:  []int{31, 41, 59, 26, 41, 58},
-			output: []int{26, 31, 41, 41, 58, 59},
-		},
-		"Empty": {
-			input:  []int{},
-			output: []int{},
-		},
-	}
-
-	for tn, tc := range testcases {
-		out, err := chapter02.BubbleSort(tc.input)
-		assert.Equal(t, tc.output, out)
-		if tc.expectedErr != nil {
-			assert.Equalf(t, tc.expectedErr, err.Error(), "%s Error Check", tn)
+	for fn, f := range functions {
+		for tn, tc := range testcases {
+			out, err := f(tc.input)
+			assert.Equalf(t, tc.output, out, "%s %s Output check", fn, tn)
+			if tc.expectedErr != nil {
+				assert.Equalf(t, tc.expectedErr, err.Error(), "%s Error Check", tn)
+			}
 		}
 	}
 }
